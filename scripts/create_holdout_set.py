@@ -4,7 +4,7 @@ import numpy as np
 # Set random seed for reproducibility
 np.random.seed(42)
 
-# Load the full dataset
+# Load the raw dataset
 df = pd.read_csv('data/full_online_shoppers_data.csv')
 
 print(f"Full dataset shape: {df.shape}")
@@ -23,11 +23,17 @@ holdout_data = df_shuffled[split_index:]
 print(f"\nTrain set shape: {train_data.shape} ({len(train_data)/len(df)*100:.1f}%)")
 print(f"Holdout set shape: {holdout_data.shape} ({len(holdout_data)/len(df)*100:.1f}%)")
 
-# Save the datasets
+# Check target distribution
+print(f"\nTarget distribution in train set:")
+print(train_data['Revenue'].value_counts())
+print(f"\nTarget distribution in holdout set:")
+print(holdout_data['Revenue'].value_counts())
+
+# Save the datasets (RAW, not preprocessed yet)
 train_data.to_csv('data/train_data.csv', index=False)
 holdout_data.to_csv('data/holdout_data.csv', index=False)
 
-print("\nDatasets saved successfully:")
+print("\nDatasets saved successfully (RAW version):")
 print("  - data/train_data.csv (for Part 1 analysis)")
 print("  - data/holdout_data.csv (DO NOT TOUCH until Part 2!)")
 
@@ -35,3 +41,7 @@ print("  - data/holdout_data.csv (DO NOT TOUCH until Part 2!)")
 print(f"\nVerification:")
 print(f"Train + Holdout = {len(train_data) + len(holdout_data)} (should equal {len(df)})")
 print(f"No overlap: {len(set(train_data.index) & set(holdout_data.index)) == 0}")
+
+print("\nNext step:")
+print("  Run: python scripts/preprocess.py data/train_data.csv")
+print("  This will create: data/train_data_preprocessed.csv")
