@@ -1,0 +1,10 @@
+Feature_Set,Avg_F1,Avg_Acc
+num_behavioral_ratios_plus_technical,0.5246376673630602,0.888736944696609
+num_behavioral_ratios_plus_temporal,0.543300143294558,0.8895983197095886
+num_behavioral_ratios_plus_user,0.5221910553811139,0.8863542201052957
+num_breadth_depth_plus_technical,0.05964154931550476,0.8451947128013167
+num_breadth_depth_plus_temporal,0.10763411664794473,0.8385546150927994
+num_breadth_depth_plus_user,0.08121363073725205,0.8330296734105145
+num_pruned_engineered_plus_technical,0.5351381531259358,0.8891426756136853
+num_pruned_engineered_plus_temporal,0.56538264459205,0.892640093596206
+num_pruned_engineered_plus_user,0.5423148978678874,0.8887876546357572

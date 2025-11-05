@@ -1,0 +1,31 @@
+{
+  "best_numeric": {
+    "name": "num_pruned_engineered",
+    "columns": [
+      "total_pages",
+      "avg_time_per_page",
+      "avg_time_per_product_page",
+      "avg_time_per_info_page",
+      "value_per_page",
+      "bounce_exit_ratio",
+      "product_focus",
+      "info_focus"
+    ]
+  },
+  "best_overall": {
+    "name": "num_pruned_engineered_plus_temporal",
+    "columns": [
+      "total_pages",
+      "avg_time_per_page",
+      "avg_time_per_product_page",
+      "avg_time_per_info_page",
+      "value_per_page",
+      "bounce_exit_ratio",
+      "product_focus",
+      "info_focus",
+      "Month",
+      "SpecialDay",
+      "Weekend"
+    ]
+  }
+}
