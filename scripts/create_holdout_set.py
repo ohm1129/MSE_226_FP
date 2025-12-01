@@ -5,7 +5,7 @@ import numpy as np
 np.random.seed(42)
 
 # Load the raw dataset
-df = pd.read_csv('data/full_online_shoppers_data.csv')
+df = pd.read_csv('data/bank_marketing.csv')
 
 print(f"Full dataset shape: {df.shape}")
 print(f"Total rows: {len(df)}")
@@ -25,9 +25,9 @@ print(f"Holdout set shape: {holdout_data.shape} ({len(holdout_data)/len(df)*100:
 
 # Check target distribution
 print(f"\nTarget distribution in train set:")
-print(train_data['Revenue'].value_counts())
+print(train_data['y'].value_counts())
 print(f"\nTarget distribution in holdout set:")
-print(holdout_data['Revenue'].value_counts())
+print(holdout_data['y'].value_counts())
 
 # Save the datasets (RAW, not preprocessed yet)
 train_data.to_csv('data/train_data.csv', index=False)

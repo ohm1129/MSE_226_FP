@@ -6,6 +6,7 @@ from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
     roc_auc_score, classification_report, confusion_matrix
 )
+from sklearn.metrics import make_scorer
 from sklearn.dummy import DummyClassifier
 import warnings
 warnings.filterwarnings('ignore')
@@ -16,11 +17,16 @@ def evaluate_model(model, X, y, cv, model_name):
     print(f"Evaluating {model_name}")
     print(f"{'='*60}")
 
+    # Scorers with explicit positive label to avoid warning/nan when labels are strings
+    f1_scorer = make_scorer(f1_score, pos_label='yes')
+    precision_scorer = make_scorer(precision_score, pos_label='yes')
+    recall_scorer = make_scorer(recall_score, pos_label='yes')
+
     # Cross-validation scores
     cv_accuracy = cross_val_score(model, X, y, cv=cv, scoring='accuracy')
-    cv_f1 = cross_val_score(model, X, y, cv=cv, scoring='f1')
-    cv_precision = cross_val_score(model, X, y, cv=cv, scoring='precision')
-    cv_recall = cross_val_score(model, X, y, cv=cv, scoring='recall')
+    cv_f1 = cross_val_score(model, X, y, cv=cv, scoring=f1_scorer)
+    cv_precision = cross_val_score(model, X, y, cv=cv, scoring=precision_scorer)
+    cv_recall = cross_val_score(model, X, y, cv=cv, scoring=recall_scorer)
     cv_roc_auc = cross_val_score(model, X, y, cv=cv, scoring='roc_auc')
 
     print(f"\n5-Fold Cross-Validation Results:")
@@ -37,9 +43,9 @@ def evaluate_model(model, X, y, cv, model_name):
 
     print(f"\nFull Training Set Performance:")
     print(f"  Accuracy:  {accuracy_score(y, y_pred):.4f}")
-    print(f"  F1-Score:  {f1_score(y, y_pred):.4f}")
-    print(f"  Precision: {precision_score(y, y_pred):.4f}")
-    print(f"  Recall:    {recall_score(y, y_pred):.4f}")
+    print(f"  F1-Score:  {f1_score(y, y_pred, pos_label='yes'):.4f}")
+    print(f"  Precision: {precision_score(y, y_pred, pos_label='yes'):.4f}")
+    print(f"  Recall:    {recall_score(y, y_pred, pos_label='yes'):.4f}")
     if y_pred_proba is not None:
         print(f"  ROC-AUC:   {roc_auc_score(y, y_pred_proba):.4f}")
 

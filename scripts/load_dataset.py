@@ -5,25 +5,22 @@ import os
 # Create data directory if it doesn't exist
 os.makedirs('data', exist_ok=True)
 
-# fetch dataset
-online_shoppers_purchasing_intention_dataset = fetch_ucirepo(id=468)
-
-# data (as pandas dataframes)
-X = online_shoppers_purchasing_intention_dataset.data.features
-y = online_shoppers_purchasing_intention_dataset.data.targets
-
-# metadata
-print(online_shoppers_purchasing_intention_dataset.metadata)
-
+# fetch dataset 
+bank_marketing = fetch_ucirepo(id=222) 
+  
+# data (as pandas dataframes) 
+X = bank_marketing.data.features 
+y = bank_marketing.data.targets 
+  
 # variable information
-print(online_shoppers_purchasing_intention_dataset.variables)
+print(bank_marketing.variables)
 
 # combine features and target into one dataframe
 df = pd.concat([X, y], axis=1)
 
 # save raw dataset to CSV
-df.to_csv('data/full_online_shoppers_data.csv', index=False)
-print(f"\nRaw dataset saved to 'data/full_online_shoppers_data.csv' with shape: {df.shape}")
+df.to_csv('data/bank_marketing.csv', index=False)
+print(f"\nRaw dataset saved to 'data/bank_marketing.csv' with shape: {df.shape}")
 print(f"Data types preserved: categorical strings, booleans")
 
 print("\nNext steps:")

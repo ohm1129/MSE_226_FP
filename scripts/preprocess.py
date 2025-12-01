@@ -22,22 +22,25 @@ def preprocess_dataset(input_path, output_path=None):
     # Create a copy for preprocessing
     df_preprocessed = df.copy()
 
-    # Separate features and target (if Revenue column exists)
-    has_target = 'Revenue' in df_preprocessed.columns
+    # Separate features and target (if y column exists)
+    has_target = 'y' in df_preprocessed.columns
     if has_target:
-        X = df_preprocessed.drop('Revenue', axis=1)
-        y = df_preprocessed['Revenue']
+        X = df_preprocessed.drop('y', axis=1)
+        y = df_preprocessed['y']
 
-        # Convert boolean target to int (True=1, False=0)
+        # Convert target to int: map yes/no strings or booleans to 1/0
         if y.dtype == bool:
             y = y.astype(int)
-            print("  Converted 'Revenue' target to integer")
+            print("  Converted boolean 'y' target to integer")
+        else:
+            y = y.map({'yes': 1, 'no': 0}).astype(int)
+            print("  Mapped string 'y' target yes/no to 1/0")
     else:
         X = df_preprocessed
         y = None
 
     # Handle categorical variables
-    categorical_cols = ['Month', 'VisitorType']
+    categorical_cols = ['job', 'marital', 'education', 'month', 'contact', 'poutcome']
     for col in categorical_cols:
         if col in X.columns:
             if X[col].dtype == 'object' or X[col].dtype.name == 'category':
@@ -46,12 +49,18 @@ def preprocess_dataset(input_path, output_path=None):
                 print(f"  Encoded '{col}' using LabelEncoder")
 
     # Convert boolean columns to int
-    bool_cols = ['Weekend']
+    bool_cols = ['default', 'housing', 'loan']
     for col in bool_cols:
         if col in X.columns:
+            # Convert target to int: map yes/no strings or booleans to 1/0
             if X[col].dtype == bool:
                 X[col] = X[col].astype(int)
-                print(f"  Converted '{col}' to integer")
+                print("  Converted boolean target to integer")
+            else:
+                X[col] = X[col].map({'yes': 1, 'no': 0}).astype(int)
+                print("  Mapped string target yes/no to 1/0")
+
+
 
     # Recombine features and target
     if has_target:
